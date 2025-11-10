@@ -1,0 +1,472 @@
+body {
+    background-color: #F0F3F6 !important;
+}
+
+.logo-section {
+    display: flex;
+    justify-content: center; /* Horizontally center the content */
+    align-items: center; /* Vertically center the content */
+    background-color: white;
+}
+.dropdown-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding-left: 11rem;
+}
+.navbar-section, .custom-top {
+    background-color: white;
+}
+
+.custom-top{
+    max-width: 1507px;
+}
+
+#navbar-section{
+    overflow: hidden;
+    z-index: 100000000;
+}
+
+.dropdown-section.row {
+    --bs-gutter-x: none !important;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.content {
+    padding-top: 60px;
+    background-color: #F0F3F6;
+}
+  
+
+.logo-pisa{
+    width: 5rem;
+}
+
+/* Dashboard */
+
+.welcome-msg{
+    font-size: 30px;
+    font-weight: 500;
+    color: #888B8F;
+}
+
+.page-name{
+    font-size: 30px;
+    font-weight: 500;
+    color: #000;
+}
+
+/* --- Overview CARDS --- */
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    border: none;
+    position: relative;
+    margin-bottom: 30px;
+    box-shadow: 0 0.46875rem 2.1875rem rgba(90,97,105,0.1), 0 0.9375rem 1.40625rem rgba(90,97,105,0.1), 0 0.25rem 0.53125rem rgba(90,97,105,0.12), 0 0.125rem 0.1875rem rgba(90,97,105,0.1);
+}
+.l-bg-cherry {
+    background: linear-gradient(to right, #493240, #f09) !important;
+    color: #fff;
+}
+
+.l-bg-blue-dark {
+    background: linear-gradient(to right, #373b44, #4286f4) !important;
+    color: #fff;
+}
+
+.l-bg-green-dark {
+    background: linear-gradient(to right, #0a504a, #38ef7d) !important;
+    color: #fff;
+}
+
+.l-bg-orange-dark {
+    background: linear-gradient(to right, #a86008, #ffba56) !important;
+    color: #fff;
+}
+
+.card .card-statistic-3 .card-icon-large .fas, .card .card-statistic-3 .card-icon-large .far, .card .card-statistic-3 .card-icon-large .fab, .card .card-statistic-3 .card-icon-large .fal {
+    font-size: 110px;
+}
+
+.card .card-statistic-3 .card-icon {
+    text-align: center;
+    line-height: 50px;
+    margin-left: 15px;
+    color: #000;
+    position: absolute;
+    right: -5px;
+    top: 20px;
+    opacity: 0.1;
+}
+
+.l-bg-cyan {
+    background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
+    color: #fff;
+}
+
+.l-bg-green {
+    background: linear-gradient(135deg, #23bdb8 0%, #43e794 100%) !important;
+    color: #fff;
+}
+
+.l-bg-orange {
+    background: linear-gradient(to right, #f9900e, #ffba56) !important;
+    color: #fff;
+}
+
+.l-bg-cyan {
+    background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
+    color: #fff;
+}
+/* --- Overview CARDS --- */
+
+/* --- Profile Card ---*/
+.profile-card-3 {
+    font-family: 'Open Sans', Arial, sans-serif;
+    position: relative;
+    float: left;
+    overflow: hidden;
+    width: 100%;
+    text-align: center;
+    height:529px !important;
+    border:none;
+  }
+  .profile-card-3 .background-block {
+      float: left;
+      width: 100%;
+      height:350px;
+      overflow: hidden;
+  }
+  .profile-card-3 .background-block .background {
+    width:100%;
+    vertical-align: top;
+    opacity: 0.9;
+    -webkit-filter: blur(0.5px);
+    filter: blur(0.5px);
+     -webkit-transform: scale(1.8);
+    transform: scale(2.8);
+  }
+  .profile-card-3 .card-content {
+    width: 100%;
+    padding: 15px 25px;
+    color:#232323;
+    float:left;
+    background:#efefef;
+    height:80%;
+    border-radius:0 0 5px 5px;
+    position: relative;
+    z-index: 9999;
+  }
+  .profile-card-3 .card-content::before {
+      content: '';
+      background: #efefef;
+      width: 120%;
+      height: 100%;
+      left: 11px;
+      bottom: 51px;
+      position: absolute;
+      z-index: -1;
+      transform: rotate(-13deg);
+  }
+  .profile-card-3 .profile {
+    border-radius: 50%;
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    max-width: 130px;
+    opacity: 1;
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(255, 255, 255, 1);
+    -webkit-transform: translate(-50%, 0%);
+    transform: translate(-50%, 0%);
+    z-index:99999;
+  }
+  .profile-card-3 h2 {
+    margin: 35px 0 25px;
+    font-weight: 600;
+    font-size:25px;
+  }
+  .profile-card-3 h2 small {
+    display: block;
+    font-size: 15px;
+    margin-top:10px;
+  }
+  .profile-card-3 i {
+    display: inline-block;
+      font-size: 16px;
+      color: #232323;
+      text-align: center;
+      border: 1px solid #232323;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 50%;
+      margin:0 5px;
+  }
+  .profile-card-3 .icon-block{
+      float:left;
+      width:100%;
+      margin-top:15px;
+  }
+  .profile-card-3 .icon-block a{
+      text-decoration:none;
+  }
+  .profile-card-3 i:hover {
+    background-color:#232323;
+    color:#fff;
+    text-decoration:none;
+  }
+
+  /* Style for the button */
+  .edit-button {
+    background-color: #f9900e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    }
+
+    /* Hover effect */
+    .edit-button:hover{
+        background-color: #0056b3;
+    }
+/* --- Profile Card ---*/
+
+/* Table for overview of Users */
+th, td {
+    width: 16.67%; /* Equal width for 6 columns */
+    text-align: center; /* Center-align the content */
+}
+.dashboard-table-card{
+    width: 100%;
+    background-color: white;
+}
+
+.custom-card-body {
+    border-left: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+    padding: 15px;
+}
+
+.status-active{
+    color: green;
+}
+
+.status-inactive{
+    color: red;
+}
+
+.view-all-button {
+    background-color: #f9900e;
+    color: white;
+    border: none;
+    padding: 5px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.view-all-button:hover {
+    background-color: #23bdb8;
+}
+
+table.dataTable.no-footer {
+    border-bottom: none !important;
+}
+
+.custom-design-pfp{
+    width: 2rem;
+}
+
+/* ------------------------------------------- USERS PAGE STYLE ----------------------------------------------- */
+
+.nav-tabs.active {
+    border-bottom: 2px solid #f9900e;
+}
+
+.custom-tabs.active {
+    background: transparent !important;
+    color: #f9900e !important;
+    border-bottom: 3px solid #f9900e !important;
+    border-radius: 0px !important;
+    border: none;
+}
+.custom-tabs {
+    color: #888B8F !important;
+}
+
+.new-user{
+    margin-right: 7rem;
+}
+
+.new-user-form {
+    background-color: #f9900e;
+    color: white;
+    border: none;
+    padding: 5px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.new-user-form:hover {
+    background-color: #23bdb8;
+}
+
+.user-table-btns{
+    margin-left: 6.5rem;
+}
+
+.add-teach-btn{
+    background-color: #f9900e;
+    color: white;
+    border: none;
+    padding: 5px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.add-teach-btn:hover{
+    background-color: #a86008;
+}
+
+
+.print-btn{
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    padding: 5px 50px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.print-btn:hover{
+    background-color: #004187;
+}
+
+.dt-buttons{
+    margin-left: 3rem !important;
+}
+
+/* --pop up-- */
+
+/* CSS for the pop-up */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    /* Remove display: flex; */
+}
+
+.popup.show {
+    display: flex; /* Add this class to show the popup */
+    justify-content: center;
+    align-items: center;
+    z-index: 100000000000000000000;
+}
+
+
+.popup-content {
+    background-color: #fff;
+    margin: 10rem;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.popup-content-attachment{
+    background-color: #fff;
+    margin: 0 auto;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.popup-content-assessment{
+    background-color: #fff;
+    margin: 3rem !important;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.close-popup-btn {
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.save-teach-btn {
+    background-color: #24B1D6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    }
+.save-teach-btn:hover {
+        background-color: #249dbb;
+}
+
+/* --popup-- */
+
+
+
+/* CREATE ASSESSMENT */
+
+.right-container{
+    max-height: 100%; 
+    overflow-y: scroll;
+}
+
+.right-container::-webkit-scrollbar {
+    width: 0.4em; /* Width of the vertical scrollbar */
+}
+
+.right-container::-webkit-scrollbar-track {
+    background: transparent; /* Background of the scrollbar track */
+}
+
+.right-container::-webkit-scrollbar-thumb {
+    background-color: transparent; /* Color of the scrollbar thumb */
+}
+
+.fixed-section {
+    position: sticky;
+    top: 0;
+    background-color: white; /* Change to your desired background color */
+    padding: 15px;
+    z-index: 100;
+}
+
+/* Style for the scrollable section */
+.scrollable-section {
+    max-height: calc(100vh - 150px); /* Adjust the maximum height as needed */
+    overflow-y: auto;
+    padding: 15px;
+}
+
+.fixed-section-bottom {
+    position: sticky;
+    bottom: 0; /* Place the fixed section at the bottom */
+    background-color: white; /* Change to your desired background color */
+    padding: 15px;
+    z-index: 1;
+}
+
+.delete-question{
+    font-size: 20px;
+}
