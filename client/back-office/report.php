@@ -42,7 +42,7 @@ include('includes/script.php');
     <div class="card" style="margin-bottom: 10rem">
             <div class="card-body m-5 pt-4 px-3">
             <?php
-                $query = "SELECT r.studentID, r.assessmentID, r.score, r.date_answered, a.assessment_name, u.fname, u.lname, u.suffix, u.userCode
+                $query = "SELECT r.studentID, r.assessmentID, r.score, r.date_answered, r.response_id, a.assessment_name, u.fname, u.lname, u.suffix, u.userCode
                 FROM studentresponse r
                 LEFT JOIN assessment a ON r.assessmentID = a.assessment_id
                 LEFT JOIN users u ON r.studentID = u.user_id WHERE role_as='2'";
@@ -67,7 +67,8 @@ include('includes/script.php');
                             <td><?= $row['userCode']; ?></td>
                             <td><?= $row['fname'] . " " . $row['lname'] . " " . $row['suffix']; ?></td>
                             <td>
-                                <button class="btn btn-link view-btn" type="button" data-bs-toggle="modal" data-bs-target="#viewAnsModal" data-userid="<?= $row['studentID']; ?>" data-assessmentID="<?= $row['assessmentID']; ?>">
+                                <button class="btn btn-link view-btn" type="button" data-bs-toggle="modal" data-bs-target="#viewAnsModal" data-userid="<?= $row['studentID']; ?>" data-assessmentID="<?= $row['assessmentID']; ?>"
+                                data-responseid="<?= $row['response_id']; ?>">
                                     <?= $row['assessment_name']; ?>
                                 </button>
                             </td>

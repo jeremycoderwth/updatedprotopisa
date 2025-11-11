@@ -2,17 +2,19 @@ document.querySelectorAll('.view-btn').forEach((button) => {
     button.addEventListener("click", () => {
         const assessmentID = button.dataset.assessmentid;
         const studentID = button.dataset.userid;
-        viewStudentAnswers(assessmentID, studentID);
+        const responseID = button.dataset.responseid;
+        console.log(responseID);
+        viewStudentAnswers(assessmentID, studentID, responseID);
     });
 });
 
-function viewStudentAnswers(assessmentID, studentID) {
+function viewStudentAnswers(assessmentID, studentID, responseID) {
     // clear old data
     const tbody = document.getElementById('answersTableBody');
     tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">Loading...</td></tr>';
 
     // fetch answers
-    fetch(`../back-office/backend/get_answers.php?assessment_id=${assessmentID}&student_id=${studentID}`)
+    fetch(`../back-office/backend/get_answers.php?assessment_id=${assessmentID}&student_id=${studentID}&response_id=${responseID}`)
         .then(res => res.json())
         .then(data => {
             tbody.innerHTML = '';
