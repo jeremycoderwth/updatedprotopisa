@@ -8,7 +8,12 @@ include './../../security/dbcon.php';
 if (isset($_GET['assessment_id'])) {
     $assessment_id = intval($_GET['assessment_id']);
 
-    // Fetch assessment details + subject
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+    $host = $_SERVER['HTTP_HOST'];
+
+    $imageFolder = '/clonepisa-main/client/back-office/assessment-files/';
+    $imageAttachmentFolder = '/clonepisa-main/client/back-office/assessment-files/image-attachments/';
+
     $sql = "SELECT 
                 a.assessment_id, 
                 a.assessment_name, 
@@ -25,12 +30,12 @@ if (isset($_GET['assessment_id'])) {
 
     if ($row = $result->fetch_assoc()) {
 
-        // Default thumbnail if none exists
         if (empty($row['attach_file'])) {
-            $row['attach_file'] = 'http://localhost/clonepisa-main/client/back-office/assessment-files/FixingScienceLead.0.jpg';
+            $row['attach_file'] = $protocol . $host . $imageFolder . 'FixingScienceLead.0.jpg';
+        } else {
+            $row['attach_file'] = $protocol . $host . $imageFolder . $row['attach_file'];
         }
 
-        // Fetch questions belonging to this assessment
         $questionQuery = "
             SELECT 
                 q.question_id,
@@ -47,9 +52,12 @@ if (isset($_GET['assessment_id'])) {
         $questions = [];
 
         while ($qRow = $questionsResult->fetch_assoc()) {
+            $qRow['image_attachment'] = empty($qRow['image_attachment']) ? 
+                $protocol . $host . $imageAttachmentFolder . 'FixingScienceLead.0.jpg' : 
+                $protocol . $host . $imageAttachmentFolder . $qRow['image_attachment'];
+
             $question_id = $qRow['question_id'];
 
-            // Fetch choices for this specific question
             $choiceQuery = "
                 SELECT 
                     c.choice_id,
@@ -68,13 +76,13 @@ if (isset($_GET['assessment_id'])) {
                 $choices[] = $cRow;
             }
 
-            $qRow['choices'] = $choices; // attach choices to this question
+            $qRow['choices'] = $choices;
             $questions[] = $qRow;
 
             $stmt3->close();
         }
 
-        $row['questions'] = $questions; // attach question list to assessment data
+        $row['questions'] = $questions;
 
         echo json_encode($row, JSON_UNESCAPED_UNICODE);
 

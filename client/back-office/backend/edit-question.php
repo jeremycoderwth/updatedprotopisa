@@ -10,33 +10,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $choiceIds = $_POST['choice_id'];
     $explanation = $_POST['explanation'];
 
-    $imagePath = null;
+    $fileUploaded = false;
+    
+    $imageDIR = __DIR__ . "/../assessment-files/image-attachments/";
+
+    if (!is_dir($imageDIR)) {
+        mkdir($imageDIR, 0777, true);
+    }
 
     if (isset($_FILES['question_image']) && $_FILES['question_image']['error'] === UPLOAD_ERR_OK) {
-        $uploadDir = '../assessment-files/image-attachments/';
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
-
         $fileName = time() . '_' . basename($_FILES['question_image']['name']);
-        $targetFilePath = $uploadDir . $fileName;
+        $targetFilePath = $imageDIR . $fileName;
 
         $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
         $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
 
         if (in_array($fileType, $allowedTypes)) {
             if (move_uploaded_file($_FILES['question_image']['tmp_name'], $targetFilePath)) {
-                $imagePath = 'http://localhost/clonepisa-main/client/back-office/assessment-files/image-attachments/' . $fileName;
+                $fileUploaded = true;
+            } else {
+                $_SESSION['message'] = "Error editing the file.";
+                header("Location: ../assessment-question.php?assessment_id=$assessment_id");
+                exit();
             }
         }
     }
 
-    if ($imagePath) {
+    if ($fileUploaded) {
         $sql = "UPDATE questions 
                 SET questionText = ?, image_attachment = ?, rationale = ?
                 WHERE question_id = ?";
         $stmt = $con->prepare($sql);
-        $stmt->bind_param('sssi', $question_text, $imagePath, $explanation, $question_id);
+        $stmt->bind_param('sssi', $question_text, $fileName, $explanation, $question_id);
     } else {
         $sql = "UPDATE questions 
                 SET questionText = ?, rationale = ?

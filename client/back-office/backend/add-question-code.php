@@ -9,9 +9,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $imageAttachment = "";
     $videoAttachment = "";
 
-    $imageDIR = "../assessment-files/image-attachments/";
-    $imageWebPath = "http://localhost/clonepisa-main/client/back-office/assessment-files/image-attachments/";
-    $videoDIR = "../assessment-files/video-attachments/";
+    $fileUpload = false;
+
+    $imageDIR = __DIR__ . "/../assessment-files/image-attachments/";
+    $videoDIR = __DIR__ . "/../assessment-files/video-attachments/";
+
+    if (!is_dir($imageDIR)) {
+        mkdir($imageDIR, 0755, true);
+    }
+
+    if (!is_dir($videoDIR)) {
+        mkdir($videoDIR, 0755, true);
+    }
     
     // Check if an image file is uploaded
     if (isset($image) && $_FILES["image"]["error"] === UPLOAD_ERR_OK) {
@@ -26,12 +35,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if (move_uploaded_file($fileTmpPath, $destPath)) {
                 // Save relative path (for displaying in browser)
-                $imageAttachment = $imageWebPath . $newFileName;
+                $fileUpload = true;
+            } else {
+                $_SESSION['message'] = "Error uploading the image file.";
+                header("Location: ../assessment-question.php?assessment_id=$assessmentId");
+                exit();
             }
         }
     }
-    
-    echo var_dump($imageAttachment);
     
     // Check if a video file is uploaded
     if (isset($_FILES["video"]) && $_FILES["video"]["error"] === UPLOAD_ERR_OK) {
@@ -42,12 +53,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         if (in_array($fileExtension, $allowedExts)) {
             // Generate unique filename
-            $newFileName = uniqid('question_img_', true) . '.' . $fileExtension;
-            $destPath = $videoDIR . $newFileName;
+            $newVideoFileName = uniqid('question_img_', true) . '.' . $fileExtension;
+            $videoPath = $videoDIR . $newVideoFileName;
 
-            if (move_uploaded_file($fileTmpPath, $destPath)) {
+            if (move_uploaded_file($fileTmpPath, $videoPath)) {
                 // Save relative path (for displaying in browser)
-                $videoAttachment = "../assessment-files/video-attachments/" . $newFileName;
+                $fileUpload = true;
+            } else {
+                $_SESSION['message'] = "Error uploading the video file.";
+                header("Location: ../assessment-question.php?assessment_id=$assessmentId");
+                exit();
             }
         }
     }
@@ -56,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "INSERT INTO questions (assessmentID, questionText, image_attachment, video_attachment, rationale) 
             VALUES (?, ?, ?, ?, ?)";
     $stmt = $con->prepare($sql);
-    $stmt->bind_param("issss", $assessmentId, $questionText, $imageAttachment, $videoAttachment, $explanation);
+    $stmt->bind_param("issss", $assessmentId, $questionText, $newFileName, $newVideoFileName, $explanation);
 
     if ($stmt->execute()) {
         // Get the last inserted question ID

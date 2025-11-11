@@ -16,8 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $image = $_FILES['fileToUpload']['name'];
     $fileUploaded = false;
-    $imageDIR = "../assessment-files/";
-    $webImagePath = "http://localhost/clonepisa-main/client/back-office/assessment-files/";
+    
+    $imageDIR = __DIR__ . "/../assessment-files/";
 
     // Check if all required fields are set and valid
     if ($assessment_id !== false && $assessmentName !== null && $subject !== false && $comment !== null && $status !== false) {
@@ -33,12 +33,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if (move_uploaded_file($fileTmpPath, $targetDirectory)) {
                     $fileUploaded = true;
-                    $uploadedFileName = $webImagePath . $newFileName;
                 } else {
                     $_SESSION['message'] = "Error uploading the file.";
                     header("Location: ../assessment-question.php?assessment_id=$assessment_id");
                     exit();
                 }
+            } else {
+                $_SESSION['message'] = "Invalid file type. Only JPG, JPEG, PNG, and GIF files are allowed.";
+                header("Location: ../assessment.php");
+                exit();
             }
         }
 
@@ -49,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if ($stmt) {
                 // Bind the parameters to the prepared statement
-                mysqli_stmt_bind_param($stmt, "sisisi", $assessmentName, $subject, $comment, $status, $uploadedFileName, $assessment_id);
+                mysqli_stmt_bind_param($stmt, "sisisi", $assessmentName, $subject, $comment, $status, $newFileName, $assessment_id);
             }
         } else {
             $query = "UPDATE assessment SET assessment_name=?, subjectID=?, comment=?, status=? WHERE assessment_id=?";

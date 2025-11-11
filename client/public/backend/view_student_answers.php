@@ -12,6 +12,10 @@ if (!isset($_SESSION['auth_user']['user_id'])) {
 $student_id = $_SESSION['auth_user']['user_id'];
 $assessment_id = intval($_GET['assessment_id'] ?? 0);
 
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+$host = $_SERVER['HTTP_HOST'];
+$imageFolder = '/clonepisa-main/client/back-office/assessment-files/';
+
 if ($assessment_id <= 0) {
     die("Invalid assessment ID.");
 }
@@ -33,8 +37,8 @@ $stmt->execute();
 $assessment = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
-$defaultImage = 'http://localhost/clonepisa-main/client/back-office/assessment-files/FixingScienceLead.0.jpg';
-$assessmentImage = !empty($assessment['attach_file']) ? $assessment['attach_file'] : $defaultImage;
+$defaultImage = $protocol . $host . $imageFolder . 'FixingScienceLead.0.jpg';
+$assessmentImage = !empty($assessment['attach_file']) ? $protocol . $host . $imageFolder . $assessment['attach_file'] : $defaultImage;
 
 $query = "
     SELECT 
@@ -119,7 +123,11 @@ $con->close();
 
                 <!-- Display image for question or fallback -->
                 <?php
-                $questionImage = $q['question_image'] ?: $assessmentImage;
+                $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+                $host = $_SERVER['HTTP_HOST'];
+                $imageFolder = '/clonepisa-main/client/back-office/assessment-files/image-attachments/';
+
+                $questionImage = $protocol . $host . $imageFolder . $q['question_image'] ?: $assessmentImage;
                 if (empty($q['question_image']) && empty($assessment['attach_file'])) {
                     $questionImage = $defaultImage;
                 }

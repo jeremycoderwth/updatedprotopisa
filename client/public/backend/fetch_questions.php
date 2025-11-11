@@ -5,6 +5,10 @@ include('../../config/dbcon.php'); // Include your database connection script
 if (isset($_GET['assessment_id'])) {
     $assessmentID = $_GET['assessment_id'];
 
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+    $host = $_SERVER['HTTP_HOST'];
+    $imageFolder = '/clonepisa-main/client/back-office/assessment-files/image-attachments/';
+
     // Query to fetch questions and choices based on the assessment ID
     $query = "SELECT q.question_id, q.questionText, q.image_attachment, q.rationale, c.choice_id, c.choiceText, c.isCorrectChoice
             FROM questions AS q
@@ -33,7 +37,7 @@ if (isset($_GET['assessment_id'])) {
     while ($row = mysqli_fetch_assoc($result)) {
         $questionID = $row['question_id'];
         $questionText = $row['questionText'];
-        $imageAttachment = $row['image_attachment'];
+        $imageAttachment = $protocol . $host . $imageFolder . $row['image_attachment'];
         $rationale = $row['rationale'];
         $choiceID = $row['choice_id'];
         $choiceText = $row['choiceText'];

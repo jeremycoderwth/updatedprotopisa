@@ -196,6 +196,7 @@ $(document).ready(function() {
           // Build questions and choices
           let questionsHTML = '';
 
+          console.log(data.questions);
           if (data.questions && data.questions.length > 0) {
             data.questions.forEach((q, i) => {
               let questionImg = q.image_attachment 

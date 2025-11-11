@@ -11,23 +11,15 @@ if (isset($_SESSION['auth_user']['user_id'])) {
         $subjectID = $_POST['subject'];
         $comment = $_POST['comment'];
 
-        // Handle file upload dynamically but same idea or approach
-        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-        $host = $_SERVER['HTTP_HOST'];
-        $basePath = dirname($_SERVER['SCRIPT_NAME']);
-
         $image = $_FILES['fileToUpload']['name'];
         $fileUploaded = false;
 
         $imageDIR = __DIR__ . "/../assessment-files/";
-        $imageWebPath = $protocol . $host . $basePath . "/assessment-files/";
 
-        // ensure the upload directory exists
         if (!is_dir($imageDIR)) {
             mkdir($imageDIR, 0755, true);
         }
 
-        // Check if a file was uploaded
         if (!empty($_FILES["fileToUpload"]["tmp_name"])) {
             $fileTmpPath = $_FILES['fileToUpload']['tmp_name'];
             $fileExtension = strtolower(pathinfo($image, PATHINFO_EXTENSION));
@@ -41,7 +33,6 @@ if (isset($_SESSION['auth_user']['user_id'])) {
 
                 if (move_uploaded_file($fileTmpPath, $targetDirectory)) {
                     $fileUploaded = true;
-                    $targetFile = $imageWebPath . $newFileName;
                 } else {
                     $_SESSION['message'] = "Error uploading the file.";
                     header("Location: ../assessment.php");
@@ -64,7 +55,7 @@ if (isset($_SESSION['auth_user']['user_id'])) {
             header("Location: ../assessment.php");
             exit();
         } else {
-            $stmt->bind_param("sisis", $assessmentName, $subjectID, $comment, $auth_id, $targetFile);
+            $stmt->bind_param("sisis", $assessmentName, $subjectID, $comment, $auth_id, $newFileName);
 
             if ($stmt->execute()) {
                 $last_id = mysqli_insert_id($con);

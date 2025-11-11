@@ -7,6 +7,10 @@ include 'includesClient/header.php';
 
 $student_id = $_SESSION['auth_user']['user_id'];
 
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+$host = $_SERVER['HTTP_HOST'];
+$imageFolder = '/clonepisa-main/client/back-office/assessment-files/';
+
 $query = "
     SELECT 
         a.assessment_id,
@@ -31,7 +35,9 @@ $result = $stmt->get_result();
 $assessments = [];
 while ($row = $result->fetch_assoc()) {
   if (empty($row['attach_file'])) {
-    $row['attach_file'] = 'http://localhost/clonepisa-main/client/back-office/assessment-files/default-image.jpg';
+      $row['attach_file'] = $protocol . $host . $imageFolder . 'FixingScienceLead.0.jpg';
+  } else {
+      $row['attach_file'] = $protocol . $host . $imageFolder . $row['attach_file'];
   }
 
   // Format the submission date nicely
