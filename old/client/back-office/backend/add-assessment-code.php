@@ -1,5 +1,5 @@
 <?php
-include('../security/authentication.php');
+include '../security/authentication.php';
 
 // Check if the user is authenticated and auth_id is available (adjust this part based on your authentication system)
 if (isset($_SESSION['auth_user']['user_id'])) {
@@ -79,13 +79,7 @@ if (isset($_SESSION['auth_user']['user_id'])) {
                 header("Location: ../assessment.php");
                 exit();
             }
-
-            // Close the statement
-            $stmt->close();
         }
-
-        // Close the database connection
-        $con->close();
     }
 } else {
     // Handle the case where the user is not authenticated
@@ -93,4 +87,3 @@ if (isset($_SESSION['auth_user']['user_id'])) {
     header("Location: ../assessment.php");
     exit();
 }
-?>

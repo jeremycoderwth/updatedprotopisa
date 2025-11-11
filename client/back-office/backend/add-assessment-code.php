@@ -11,11 +11,21 @@ if (isset($_SESSION['auth_user']['user_id'])) {
         $subjectID = $_POST['subject'];
         $comment = $_POST['comment'];
 
-        // Handle file upload
+        // Handle file upload dynamically but same idea or approach
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $host = $_SERVER['HTTP_HOST'];
+        $basePath = dirname($_SERVER['SCRIPT_NAME']);
+
         $image = $_FILES['fileToUpload']['name'];
         $fileUploaded = false;
-        $imageDIR = "../assessment-files/";
-        $imageWebPath = "http://localhost/clonepisa-main/client/back-office/assessment-files/";
+
+        $imageDIR = __DIR__ . "/../assessment-files/";
+        $imageWebPath = $protocol . $host . $basePath . "/assessment-files/";
+
+        // ensure the upload directory exists
+        if (!is_dir($imageDIR)) {
+            mkdir($imageDIR, 0755, true);
+        }
 
         // Check if a file was uploaded
         if (!empty($_FILES["fileToUpload"]["tmp_name"])) {
@@ -37,6 +47,10 @@ if (isset($_SESSION['auth_user']['user_id'])) {
                     header("Location: ../assessment.php");
                     exit();
                 }
+            } else {
+                $_SESSION['message'] = "Invalid file type. Only JPG, JPEG, PNG, and GIF files are allowed.";
+                header("Location: ../assessment.php");
+                exit();
             }
         }
 
