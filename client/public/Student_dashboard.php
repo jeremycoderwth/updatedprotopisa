@@ -12,19 +12,20 @@ $host = $_SERVER['HTTP_HOST'];
 $imageFolder = '/clonepisa-main/client/back-office/assessment-files/';
 
 $query = "
-    SELECT 
-        a.assessment_id,
-        a.assessment_name,
-        a.comment,
-        a.attach_file,
-        s.subject_name,
-        MAX(sa.created_at) AS date_submitted
-    FROM student_answers sa
-    INNER JOIN assessment a ON sa.assessmentID = a.assessment_id
-    LEFT JOIN subject s ON a.subjectID = s.subject_id
-    WHERE sa.studentID = ?
-    GROUP BY a.assessment_id, a.assessment_name, a.comment, a.attach_file, s.subject_name
-    ORDER BY date_submitted DESC
+SELECT 
+    a.assessment_id,
+    a.assessment_name,
+    a.comment,
+    a.attach_file,
+    s.subject_name,
+    sa.response_id,
+    sa.created_at AS date_submitted,
+    ROW_NUMBER() OVER (PARTITION BY a.assessment_id ORDER BY sa.created_at ASC) AS attempt_number
+FROM student_answers sa
+INNER JOIN assessment a ON sa.assessmentID = a.assessment_id
+LEFT JOIN subject s ON a.subjectID = s.subject_id
+WHERE sa.studentID = ?
+ORDER BY date_submitted DESC
 ";
 
 $stmt = $con->prepare($query);
