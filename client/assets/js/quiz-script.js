@@ -270,15 +270,33 @@ style.textContent = `
 }
 
 .option-div.correct {
-    background-color: #c8e6c9 !important;
-    border-color: #388e3c !important;
-    color: #2e7d32;
+    background-color: #d8f5dc !important;  /* soft mint green */
+    border: 2px solid #5cb85c !important;  /* medium green border */
+    color: #2e7d32 !important;
+    box-shadow: 0 0 6px rgba(92, 184, 92, 0.3);
+    transition: 0.3s ease;
 }
 
 .option-div.wrong {
-    background-color: #ffcdd2 !important;
-    border-color: #d32f2f !important;
-    color: #b71c1c;
+    background-color: #fde2e1 !important;  /* light rose red */
+    border: 2px solid #f16c6c !important;  /* medium red border */
+    color: #a94442 !important;
+    box-shadow: 0 0 6px rgba(241, 108, 108, 0.3);
+    transition: 0.3s ease;
+}
+
+.option-div.correct::after {
+    content: " ✓";
+    color: #2e7d32;
+    font-weight: bold;
+    margin-left: 6px;
+}
+
+.option-div.wrong::after {
+    content: " ✗";
+    color: #a94442;
+    font-weight: bold;
+    margin-left: 6px;
 }
 
 .explanation {
@@ -479,7 +497,7 @@ function checker(userOption) {
         userResponses.push(isCorrect);
         scoreCount++;
     } else {
-        userOption.classList.add("incorrect");
+        userOption.classList.add("wrong");
         options.forEach((element) => {
             if (element.innerText.trim() === correctChoiceText) {
                 element.classList.add("correct");
